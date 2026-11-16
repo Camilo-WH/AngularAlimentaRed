@@ -1,8 +1,11 @@
 export type Rol = 'DONANTE' | 'RECEPTORA' | 'COORDINADOR' | 'ADMINISTRADOR';
 
-// Roles que pueden entrar al panel web. Para permitir al coordinador,
-// agrega 'COORDINADOR' a esta lista.
-export const ROLES_PANEL: Rol[] = ['ADMINISTRADOR'];
+export type RolPanel = Extract<Rol, 'ADMINISTRADOR' | 'COORDINADOR'>;
+
+export interface EnlaceMenu {
+  ruta: string;
+  titulo: string;
+}
 
 export interface Organizacion {
   id: number;
@@ -37,4 +40,9 @@ export interface LoginResponse {
   tipo: string;
   expiraEnSegundos: number;
   usuario: Usuario;
+}
+
+export interface ColumnaTabla<T extends object> {
+  clave: keyof T;
+  titulo: string;
 }

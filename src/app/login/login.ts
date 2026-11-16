@@ -2,8 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../core/auth.service';
-import { ROLES_PANEL } from '../core/modelos';
+import { AuthService, rutaPanelPorRol } from '../core/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -140,14 +139,14 @@ export class Login {
 
     this.auth.login(this.form.getRawValue()).subscribe({
       next: () => {
-        // Solo los roles permitidos pueden usar el panel
-        if (!this.auth.tieneRol(ROLES_PANEL)) {
+        const destino = rutaPanelPorRol(this.auth.usuario()?.rol ?? null);
+        if (!destino) {
           this.auth.limpiarSesion();
           this.cargando.set(false);
-          this.error.set('Esta aplicación es solo para el personal administrativo.');
+          this.error.set('Tu cuenta no tiene acceso a los paneles administrativos.');
           return;
         }
-        this.router.navigate(['/panel']);
+        this.router.navigateByUrl(destino);
       },
       error: (e: HttpErrorResponse) => {
         this.cargando.set(false);

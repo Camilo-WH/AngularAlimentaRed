@@ -1,8 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { MensajesComponent } from './shared/mensajes/mensajes.component';
 
 @Component({
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MensajesComponent],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',

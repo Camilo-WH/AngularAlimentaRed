@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { ApiService } from './api.service';
 import { LoginRequest, LoginResponse, Rol, Usuario } from './modelos';
 
 interface Sesion {
@@ -15,30 +14,34 @@ const CLAVE_SESION = 'alimentared_sesion';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly http = inject(HttpClient);
+  private readonly api = inject(ApiService);
   private readonly router = inject(Router);
 
   private readonly sesion = signal<Sesion | null>(this.leerSesion());
+  private temporizadorExpiracion: ReturnType<typeof setTimeout> | null = null;
 
   readonly usuario = computed<Usuario | null>(() => this.sesion()?.usuario ?? null);
 
+  constructor() {
+    this.programarExpiracion();
+  }
+
   /** Devuelve el token solo si existe y no ha vencido. */
   get token(): string | null {
-    const s = this.sesion();
-    return s && Date.now() < s.expiraEn ? s.token : null;
+    return this.obtenerSesionVigente()?.token ?? null;
   }
 
   estaAutenticado(): boolean {
-    return this.token !== null;
+    return this.obtenerSesionVigente() !== null;
   }
 
   tieneRol(roles: Rol[]): boolean {
-    const u = this.sesion()?.usuario;
+    const u = this.obtenerSesionVigente()?.usuario;
     return !!u && roles.includes(u.rol);
   }
 
   login(datos: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${environment.apiUrl}/auth/login`, datos).pipe(
+    return this.api.post<LoginRequest, LoginResponse>('auth/login', datos).pipe(
       tap((respuesta) => {
         const sesion: Sesion = {
           token: respuesta.token,
@@ -47,12 +50,17 @@ export class AuthService {
         };
         sessionStorage.setItem(CLAVE_SESION, JSON.stringify(sesion));
         this.sesion.set(sesion);
+        this.programarExpiracion();
       }),
     );
   }
 
   /** Borra la sesión sin cambiar de pantalla. */
   limpiarSesion(): void {
+    if (this.temporizadorExpiracion !== null) {
+      clearTimeout(this.temporizadorExpiracion);
+      this.temporizadorExpiracion = null;
+    }
     sessionStorage.removeItem(CLAVE_SESION);
     this.sesion.set(null);
   }
@@ -63,12 +71,68 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  private obtenerSesionVigente(): Sesion | null {
+    const sesion = this.sesion();
+    if (!sesion) {
+      return null;
+    }
+    if (Date.now() >= sesion.expiraEn) {
+      this.limpiarSesion();
+      return null;
+    }
+    return sesion;
+  }
+
+  private programarExpiracion(): void {
+    if (this.temporizadorExpiracion !== null) {
+      clearTimeout(this.temporizadorExpiracion);
+      this.temporizadorExpiracion = null;
+    }
+    const sesion = this.obtenerSesionVigente();
+    if (sesion) {
+      this.temporizadorExpiracion = setTimeout(
+        () => this.logout(),
+        Math.max(0, sesion.expiraEn - Date.now()),
+      );
+    }
+  }
+
   private leerSesion(): Sesion | null {
     try {
       const crudo = sessionStorage.getItem(CLAVE_SESION);
-      return crudo ? (JSON.parse(crudo) as Sesion) : null;
+      if (!crudo) {
+        return null;
+      }
+      const valor: unknown = JSON.parse(crudo);
+      if (typeof valor !== 'object' || valor === null) {
+        return null;
+      }
+      const posibleSesion = valor as Partial<Sesion>;
+      if (
+        typeof posibleSesion.token !== 'string' ||
+        typeof posibleSesion.expiraEn !== 'number' ||
+        typeof posibleSesion.usuario !== 'object' ||
+        posibleSesion.usuario === null
+      ) {
+        return null;
+      }
+      return {
+        token: posibleSesion.token,
+        expiraEn: posibleSesion.expiraEn,
+        usuario: posibleSesion.usuario,
+      };
     } catch {
       return null;
     }
   }
+}
+
+export function rutaPanelPorRol(rol: Rol | null): string | null {
+  if (rol === 'ADMINISTRADOR') {
+    return '/admin';
+  }
+  if (rol === 'COORDINADOR') {
+    return '/coordinador';
+  }
+  return null;
 }
