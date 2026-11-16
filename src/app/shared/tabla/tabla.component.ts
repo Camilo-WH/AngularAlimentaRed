@@ -23,7 +23,7 @@ import { ColumnaTabla } from '../../core/modelos';
             @for (fila of filasPagina(); track $index) {
               <tr>
                 @for (columna of columnas(); track columna.titulo) {
-                  <td>{{ fila[columna.clave] }}</td>
+                  <td>{{ valor(fila, columna.clave) }}</td>
                 }
               </tr>
             }
@@ -52,6 +52,7 @@ import { ColumnaTabla } from '../../core/modelos';
         border: 1px solid #e1e7e2;
         border-radius: 8px;
         background: #fff;
+        color: #1f2a22;
       }
       table {
         width: 100%;
@@ -108,6 +109,15 @@ export class TablaComponent<T extends object> {
     const inicio = (this.pagina() - 1) * tamano;
     return this.filas().slice(inicio, inicio + tamano);
   });
+
+  /** Devuelve el valor de una celda como texto, sin depender del tipo de la fila. */
+  valor(fila: T, clave: ColumnaTabla<T>['clave']): string {
+    const dato = (fila as unknown as Record<string, unknown>)[String(clave)];
+    if (dato === null || dato === undefined) {
+      return '';
+    }
+    return typeof dato === 'boolean' ? (dato ? 'Sí' : 'No') : String(dato);
+  }
 
   anterior(): void {
     this.pagina.update((pagina) => Math.max(1, pagina - 1));

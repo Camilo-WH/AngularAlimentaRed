@@ -164,6 +164,6 @@ export const routes: Routes = [
         (modulo) => modulo.NoEncontradaComponent,
       ),
   },
-  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  { path: '', pathMatch: 'full', redirectTo: 'organizaciones' },
   { path: '**', redirectTo: 'no-encontrada' },
 ];
