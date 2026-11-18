@@ -4,6 +4,7 @@ import { guestGuard } from './core/guest.guard';
 import { Login } from './login/login';
 
 export const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
   {
     path: 'login',
     component: Login,
@@ -102,7 +103,7 @@ export const routes: Routes = [
       {
         path: 'apelaciones',
         loadComponent: () =>
-          import('./panel/panel-coordinador/apelaciones/evaluar-apelacion').then(
+          import('./panel/panel-panel-coordinador/apelaciones/evaluar-apelacion').then(
             (modulo) => modulo.EvaluarApelacion,
           ),
       },
@@ -164,6 +165,5 @@ export const routes: Routes = [
         (modulo) => modulo.NoEncontradaComponent,
       ),
   },
-  { path: '', pathMatch: 'full', redirectTo: 'organizaciones' },
   { path: '**', redirectTo: 'no-encontrada' },
 ];
