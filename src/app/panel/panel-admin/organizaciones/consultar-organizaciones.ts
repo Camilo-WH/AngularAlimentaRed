@@ -63,26 +63,32 @@ interface FilaOrganizacion {
       }
       h2 {
         margin: 0;
+        color: var(--color-texto);
+        font-family: var(--fuente-titulos);
       }
       .resumen {
         margin: 4px 0 0;
-        color: #647168;
+        color: var(--color-texto-secundario);
       }
       .filtro {
         display: flex;
         align-items: center;
-        gap: 8px;
-        font-size: 14px;
+        gap: 10px;
+        color: var(--color-texto);
+        font-size: var(--texto-sm);
+        font-weight: var(--peso-semibold);
       }
       select {
-        padding: 8px 10px;
-        border: 1px solid #cbd5ce;
-        border-radius: 6px;
-        background: #fff;
-        color: #1f2a22;
+        min-height: 42px;
+        padding: 8px 12px;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-control);
+        background: var(--color-superficie);
+        color: var(--color-texto);
+        font: inherit;
       }
       .estado {
-        color: #647168;
+        color: var(--color-texto-secundario);
       }
     `,
   ],

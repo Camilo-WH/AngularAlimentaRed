@@ -162,53 +162,66 @@ const coincidenContrasenas: ValidatorFn = (grupo: AbstractControl): ValidationEr
       h2,
       h3 {
         margin: 0;
+        color: var(--color-texto);
+        font-family: var(--fuente-titulos);
       }
       .subtitulo {
         margin-top: 24px;
       }
       .resumen,
       .estado {
-        color: #647168;
+        color: var(--color-texto-secundario);
       }
       .formulario {
-        margin: 16px 0 8px;
-        padding: 16px;
-        border: 1px solid #e1e7e2;
-        border-radius: 8px;
-        background: #fff;
-        color: #1f2a22;
+        margin: 20px 0 12px;
+        padding: clamp(18px, 2.5vw, 28px);
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-tarjeta);
+        background: var(--color-superficie);
+        color: var(--color-texto);
+        box-shadow: var(--sombra-tarjeta);
       }
       .campos {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        margin: 12px 0;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin: 20px 0;
       }
       label {
         display: flex;
         flex-direction: column;
-        gap: 4px;
-        font-size: 14px;
+        gap: 7px;
+        color: var(--color-texto);
+        font-size: var(--texto-sm);
+        font-weight: var(--peso-semibold);
       }
       input,
       select {
-        padding: 9px 10px;
-        border: 1px solid #cbd5ce;
-        border-radius: 6px;
+        width: 100%;
+        min-height: 44px;
+        padding: 10px 12px;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-control);
+        background: var(--color-fondo);
+        color: var(--color-texto);
         font: inherit;
-        color: #1f2a22;
-        background: #fff;
       }
       .error {
-        color: #b91c1c;
+        color: var(--color-error);
+        font-size: var(--texto-sm);
       }
       button {
-        padding: 8px 14px;
-        border: 0;
-        border-radius: 6px;
-        background: #2e7d32;
-        color: #fff;
+        min-height: 40px;
+        padding: 9px 16px;
+        border: 1px solid transparent;
+        border-radius: var(--radio-control);
+        background: var(--color-acento);
+        color: var(--color-acento-texto);
+        font-weight: var(--peso-semibold);
         cursor: pointer;
+      }
+      button:hover:not(:disabled) {
+        background: var(--color-acento-hover);
       }
       button:disabled {
         opacity: 0.6;
@@ -216,24 +229,32 @@ const coincidenContrasenas: ValidatorFn = (grupo: AbstractControl): ValidationEr
       }
       .contenedor {
         overflow-x: auto;
-        border: 1px solid #e1e7e2;
-        border-radius: 8px;
-        background: #fff;
-        color: #1f2a22;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-tarjeta);
+        background: var(--color-superficie);
+        color: var(--color-texto);
+        box-shadow: var(--sombra-tarjeta);
       }
       table {
         width: 100%;
         border-collapse: collapse;
         text-align: left;
+        font-family: var(--fuente-texto);
       }
       th,
       td {
         padding: 12px 14px;
-        border-bottom: 1px solid #e8ece9;
+        border-bottom: 1px solid var(--color-borde);
       }
       th {
-        background: #f3f7f4;
-        font-weight: 600;
+        background: var(--color-superficie-secundaria);
+        font-weight: var(--peso-semibold);
+      }
+      tbody tr:hover {
+        background: var(--color-superficie-hover);
+      }
+      tbody tr:last-child td {
+        border-bottom: 0;
       }
     `,
   ],

@@ -36,17 +36,21 @@ import { Component, input, output } from '@angular/core';
         display: grid;
         place-items: center;
         padding: 20px;
-        background: #0008;
+        background: color-mix(in srgb, var(--color-fondo) 78%, transparent);
+        backdrop-filter: blur(4px);
       }
       .dialogo {
         width: min(440px, 100%);
         padding: 24px;
-        border-radius: 12px;
-        background: #fff;
-        box-shadow: 0 16px 48px #0003;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-tarjeta);
+        background: var(--color-superficie);
+        color: var(--color-texto);
+        box-shadow: var(--sombra-tarjeta);
       }
       h2 {
         margin-top: 0;
+        font-family: var(--fuente-titulos);
       }
       footer {
         display: flex;
@@ -55,17 +59,29 @@ import { Component, input, output } from '@angular/core';
         margin-top: 24px;
       }
       button {
+        min-height: 40px;
         padding: 9px 14px;
-        border: 0;
-        border-radius: 6px;
+        border: 1px solid transparent;
+        border-radius: var(--radio-control);
+        font-weight: var(--peso-semibold);
         cursor: pointer;
       }
       .secundario {
-        background: #e5e7eb;
+        border-color: var(--color-borde);
+        background: var(--color-superficie-secundaria);
+        color: var(--color-texto);
       }
       .confirmar {
-        background: #287a3d;
-        color: #fff;
+        background: var(--color-acento);
+        color: var(--color-acento-texto);
+      }
+      button:hover {
+        filter: brightness(1.08);
+      }
+      @media (max-width: 420px) {
+        footer {
+          flex-wrap: wrap;
+        }
       }
     `,
   ],

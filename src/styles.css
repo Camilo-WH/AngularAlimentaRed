@@ -1,1 +1,130 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  color-scheme: dark;
+
+  --color-fondo: #0f171a;
+  --color-superficie: #162226;
+  --color-superficie-secundaria: #1c2a2f;
+  --color-superficie-hover: #27383d;
+  --color-texto: #e5ecee;
+  --color-texto-secundario: #aab8bc;
+  --color-borde: #32464d;
+  --color-acento: #cef17b;
+  --color-acento-texto: #084734;
+  --color-acento-hover: #ddf6a7;
+  --color-foco: #cef17b;
+  --color-exito: #a7e0ba;
+  --color-exito-fondo: #1d302a;
+  --color-error: #ffb4ab;
+  --color-error-fondo: #3c292a;
+  --color-advertencia: #ffe08a;
+  --color-advertencia-fondo: #39331f;
+  --color-informacion: #a8ddf0;
+  --color-informacion-fondo: #1b3039;
+  --color-panel-marca: #084734;
+  --color-panel-marca-medio: #0b5b40;
+  --color-panel-marca-acento: #cef17b;
+  --color-panel-marca-suave: #cdebb3;
+  --color-panel-marca-texto: #f6faf2;
+
+  --fuente-titulos: 'Manrope', system-ui, sans-serif;
+  --fuente-texto: 'Source Sans 3', system-ui, sans-serif;
+  --texto-xs: 0.75rem;
+  --texto-sm: 0.875rem;
+  --texto-base: 1rem;
+  --texto-lg: 1.125rem;
+  --texto-xl: 1.25rem;
+  --texto-2xl: 1.5rem;
+  --texto-3xl: 1.875rem;
+  --peso-normal: 400;
+  --peso-medio: 500;
+  --peso-semibold: 600;
+  --peso-bold: 700;
+  --radio-control: 0.625rem;
+  --radio-tarjeta: 1rem;
+  --sombra-tarjeta: 0 1rem 2.5rem rgb(0 0 0 / 22%);
+  --transicion-base: 160ms ease;
+}
+
+:root[data-tema='claro'] {
+  color-scheme: light;
+
+  --color-fondo: #f6faf2;
+  --color-superficie: #ffffff;
+  --color-superficie-secundaria: #ecf5e5;
+  --color-superficie-hover: #e0f0d8;
+  --color-texto: #084734;
+  --color-texto-secundario: #466254;
+  --color-borde: #b8ccbe;
+  --color-acento: #084734;
+  --color-acento-texto: #cef17b;
+  --color-acento-hover: #063b2c;
+  --color-foco: #084734;
+  --color-exito: #14532d;
+  --color-exito-fondo: #e7f5e9;
+  --color-error: #a61b14;
+  --color-error-fondo: #fde8e7;
+  --color-advertencia: #7a4600;
+  --color-advertencia-fondo: #fff3cc;
+  --color-informacion: #155e75;
+  --color-informacion-fondo: #e6f5fa;
+  --color-panel-marca: #084734;
+  --color-panel-marca-medio: #0b5b40;
+  --color-panel-marca-acento: #cef17b;
+  --color-panel-marca-suave: #cdebb3;
+  --color-panel-marca-texto: #f6faf2;
+  --sombra-tarjeta: 0 1rem 2.5rem rgb(8 71 52 / 9%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--color-fondo);
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-normal);
+  line-height: 1.5;
+  transition:
+    background-color var(--transicion-base),
+    color var(--transicion-base);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--color-acento);
+  color: var(--color-acento-texto);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

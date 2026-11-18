@@ -202,6 +202,8 @@ const ORDEN_PAGINA = 'fechaEntrega,desc';
       h2,
       h3 {
         margin: 0;
+        color: var(--color-texto);
+        font-family: var(--fuente-titulos);
       }
       .cabecera {
         display: flex;
@@ -212,59 +214,67 @@ const ORDEN_PAGINA = 'fechaEntrega,desc';
       }
       .resumen,
       .estado {
-        color: #647168;
+        color: var(--color-texto-secundario);
       }
       .resumen {
         margin: 5px 0 0;
       }
       .total {
-        color: #647168;
-        font-size: 14px;
+        color: var(--color-texto-secundario);
+        font-size: var(--texto-sm);
         white-space: nowrap;
       }
       .filtros {
         display: flex;
         flex-wrap: wrap;
         align-items: flex-end;
-        gap: 12px;
-        margin-bottom: 18px;
-        padding: 16px;
-        border: 1px solid #e1e7e2;
-        border-radius: 8px;
-        background: #fff;
+        gap: 14px;
+        margin-bottom: 20px;
+        padding: 18px;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-tarjeta);
+        background: var(--color-superficie);
+        box-shadow: var(--sombra-tarjeta);
       }
       label {
         display: grid;
-        gap: 5px;
-        color: #34443a;
-        font-size: 14px;
+        gap: 6px;
+        color: var(--color-texto);
+        font-size: var(--texto-sm);
+        font-weight: var(--peso-semibold);
       }
       input,
       select {
+        min-height: 42px;
         min-width: 180px;
-        padding: 8px 10px;
-        border: 1px solid #cbd5ce;
-        border-radius: 6px;
-        background: #fff;
-        color: #1f2a22;
+        padding: 8px 12px;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-control);
+        background: var(--color-fondo);
+        color: var(--color-texto);
         font: inherit;
       }
       button {
+        min-height: 40px;
         padding: 8px 14px;
-        border: 0;
-        border-radius: 6px;
-        background: #2e7d32;
-        color: #fff;
+        border: 1px solid transparent;
+        border-radius: var(--radio-control);
+        background: var(--color-acento);
+        color: var(--color-acento-texto);
+        font-weight: var(--peso-semibold);
         cursor: pointer;
+      }
+      button:hover:not(:disabled) {
+        background: var(--color-acento-hover);
       }
       button:disabled {
         opacity: 0.6;
         cursor: default;
       }
       .secundario {
-        border: 1px solid #cbd5ce;
-        background: #fff;
-        color: #1f2a22;
+        border-color: var(--color-borde);
+        background: var(--color-superficie);
+        color: var(--color-texto);
       }
       .acciones-filtro,
       .acciones-trazabilidad {
@@ -277,13 +287,13 @@ const ORDEN_PAGINA = 'fechaEntrega,desc';
         flex-basis: 100%;
         align-items: center;
         gap: 10px;
-        color: #991b1b;
+        color: var(--color-error);
       }
       .estado {
         padding: 14px 0;
       }
       .error-carga {
-        color: #991b1b;
+        color: var(--color-error);
       }
       .paginacion {
         display: flex;
@@ -296,10 +306,11 @@ const ORDEN_PAGINA = 'fechaEntrega,desc';
         display: grid;
         gap: 12px;
         margin-top: 24px;
-        padding: 18px;
-        border: 1px solid #e1e7e2;
-        border-radius: 8px;
-        background: #fff;
+        padding: clamp(18px, 2vw, 24px);
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-tarjeta);
+        background: var(--color-superficie);
+        box-shadow: var(--sombra-tarjeta);
       }
       .selector {
         max-width: 560px;

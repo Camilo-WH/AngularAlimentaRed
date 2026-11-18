@@ -152,6 +152,8 @@ type Filtro = 'con-strikes' | 'suspendidas';
       h2,
       h3 {
         margin: 0;
+        color: var(--color-texto);
+        font-family: var(--fuente-titulos);
       }
       .cabecera {
         display: flex;
@@ -164,29 +166,34 @@ type Filtro = 'con-strikes' | 'suspendidas';
       }
       .resumen,
       .estado {
-        color: #647168;
+        color: var(--color-texto-secundario);
       }
       .resumenes {
-        display: flex;
-        gap: 12px;
-        margin: 16px 0;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(150px, 1fr));
+        gap: 16px;
+        margin: 24px 0;
       }
       .tarjeta {
         display: flex;
         flex-direction: column;
-        min-width: 150px;
-        padding: 14px 16px;
-        border: 1px solid #e1e7e2;
-        border-radius: 8px;
-        background: #fff;
-        color: #1f2a22;
+        min-width: 0;
+        gap: 4px;
+        padding: 18px 20px;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-tarjeta);
+        background: var(--color-superficie);
+        color: var(--color-texto);
+        box-shadow: var(--sombra-tarjeta);
       }
       .tarjeta strong {
-        font-size: 26px;
+        font-family: var(--fuente-titulos);
+        font-size: var(--texto-3xl);
+        font-weight: var(--peso-bold);
       }
       .tarjeta span {
-        color: #647168;
-        font-size: 14px;
+        color: var(--color-texto-secundario);
+        font-size: var(--texto-sm);
       }
       .barra {
         margin-bottom: 12px;
@@ -194,61 +201,80 @@ type Filtro = 'con-strikes' | 'suspendidas';
       .filtro {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        font-size: 14px;
+        gap: 10px;
+        color: var(--color-texto);
+        font-size: var(--texto-sm);
+        font-weight: var(--peso-semibold);
       }
       select {
-        padding: 8px 10px;
-        border: 1px solid #cbd5ce;
-        border-radius: 6px;
-        background: #fff;
-        color: #1f2a22;
+        min-height: 42px;
+        padding: 8px 12px;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-control);
+        background: var(--color-superficie);
+        color: var(--color-texto);
+        font: inherit;
       }
       .contenedor {
         overflow-x: auto;
-        border: 1px solid #e1e7e2;
-        border-radius: 8px;
-        background: #fff;
-        color: #1f2a22;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-tarjeta);
+        background: var(--color-superficie);
+        color: var(--color-texto);
+        box-shadow: var(--sombra-tarjeta);
       }
       table {
         width: 100%;
         border-collapse: collapse;
         text-align: left;
+        font-family: var(--fuente-texto);
       }
       th,
       td {
         padding: 12px 14px;
-        border-bottom: 1px solid #e8ece9;
+        border-bottom: 1px solid var(--color-borde);
       }
       th {
-        background: #f3f7f4;
-        font-weight: 600;
+        background: var(--color-superficie-secundaria);
+        font-weight: var(--peso-semibold);
+      }
+      tbody tr:hover {
+        background: var(--color-superficie-hover);
+      }
+      tbody tr:last-child td {
+        border-bottom: 0;
       }
       tr.activa td {
-        background: #f3f7f4;
+        background: var(--color-superficie-hover);
       }
       .etiqueta {
-        padding: 3px 10px;
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
         border-radius: 999px;
-        background: #dcfce7;
-        color: #166534;
-        font-size: 13px;
+        background: var(--color-exito-fondo);
+        color: var(--color-exito);
+        font-size: var(--texto-xs);
+        font-weight: var(--peso-semibold);
       }
       .etiqueta.suspendida {
-        background: #fee2e2;
-        color: #991b1b;
+        background: var(--color-error-fondo);
+        color: var(--color-error);
       }
       .celda-accion {
         text-align: right;
       }
       button {
+        min-height: 38px;
         padding: 7px 12px;
-        border: 1px solid #cbd5ce;
-        border-radius: 6px;
-        background: #fff;
-        color: #1f2a22;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-control);
+        background: var(--color-superficie);
+        color: var(--color-texto);
         cursor: pointer;
+      }
+      button:hover:not(:disabled) {
+        background: var(--color-superficie-hover);
       }
       button:disabled {
         opacity: 0.6;
@@ -256,7 +282,12 @@ type Filtro = 'con-strikes' | 'suspendidas';
       }
       .oculto {
         position: absolute;
-        left: -9999px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        clip-path: inset(50%);
       }
     `,
   ],

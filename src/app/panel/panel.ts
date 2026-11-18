@@ -24,22 +24,23 @@ import { AuthService } from '../core/auth.service';
         justify-content: space-between;
         align-items: center;
         padding: 12px 24px;
-        background: #2e7d32;
-        color: #fff;
-        font-family: system-ui, sans-serif;
+        border-bottom: 1px solid var(--color-borde);
+        background: var(--color-superficie);
+        color: var(--color-texto);
+        font-family: var(--fuente-texto);
       }
       .usuario button {
         margin-left: 12px;
         padding: 6px 12px;
-        border: 1px solid #fff;
-        border-radius: 6px;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-control);
         background: transparent;
-        color: #fff;
+        color: var(--color-texto);
         cursor: pointer;
       }
       .contenido {
         padding: 24px;
-        font-family: system-ui, sans-serif;
+        font-family: var(--fuente-texto);
       }
     `,
   ],

@@ -2,21 +2,27 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { EnlaceMenu } from '../../core/modelos';
+import { LogoMarcaComponent } from '../../shared/marca/logo-marca.component';
+import { BotonTemaComponent } from '../../shared/tema/boton-tema.component';
 
 @Component({
   selector: 'app-layout-coordinador',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, RouterOutlet],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet, LogoMarcaComponent, BotonTemaComponent],
   template: `
     <div class="marco">
       <aside class="lateral">
-        <a class="marca" routerLink="/coordinador">AlimentaRed <small>Coordinación</small></a>
-        <nav aria-label="Menú de coordinación">
+        <a class="marca" routerLink="/coordinador" aria-label="AlimentaRed, inicio de coordinación">
+          <app-logo-marca tamano="pequeno" />
+          <span class="rol-marca">Coordinación</span>
+        </a>
+        <nav class="menu" aria-label="Menú de coordinación">
           @for (enlace of menu; track enlace.ruta) {
             <a
               [routerLink]="['/coordinador', enlace.ruta]"
               routerLinkActive="activo"
               [routerLinkActiveOptions]="{ exact: true }"
+              ariaCurrentWhenActive="page"
             >
               {{ enlace.titulo }}
             </a>
@@ -25,11 +31,19 @@ import { EnlaceMenu } from '../../core/modelos';
       </aside>
       <section class="principal">
         <header class="barra">
-          <div>
+          <div class="identidad">
             <strong>{{ auth.usuario()?.nombre ?? 'Usuario' }}</strong>
-            <span>Coordinador</span>
+            <span class="rol">Coordinador</span>
           </div>
-          <button type="button" (click)="auth.logout()">Cerrar sesión</button>
+          <div class="acciones">
+            <app-boton-tema />
+            <button class="salir" type="button" (click)="auth.logout()">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                <path d="M10 17l5-5-5-5m5 5H3m9-9h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6" />
+              </svg>
+              <span>Cerrar sesión</span>
+            </button>
+          </div>
         </header>
         <main class="contenido"><router-outlet /></main>
       </section>
@@ -40,81 +54,145 @@ import { EnlaceMenu } from '../../core/modelos';
       :host {
         display: block;
         min-height: 100vh;
-        color: #233329;
-        font-family: system-ui, sans-serif;
+        color: var(--color-texto);
+        font-family: var(--fuente-texto);
       }
       .marco {
         display: flex;
         min-height: 100vh;
+        background: var(--color-fondo);
       }
       .lateral {
-        flex: 0 0 270px;
-        padding: 22px 14px;
-        background: #193d29;
-        color: #fff;
+        position: sticky;
+        top: 0;
+        display: flex;
+        width: 276px;
+        height: 100vh;
+        height: 100svh;
+        flex: 0 0 276px;
+        flex-direction: column;
+        overflow-y: auto;
+        padding: 26px 16px;
+        background: var(--color-panel-marca);
+        color: var(--color-panel-marca-texto);
       }
       .marca {
         display: grid;
-        gap: 4px;
-        padding: 0 12px 24px;
+        justify-items: start;
+        gap: 12px;
+        padding: 0 10px 24px;
+        border-bottom: 1px solid color-mix(in srgb, var(--color-panel-marca-texto) 18%, transparent);
         color: inherit;
-        font-size: 20px;
-        font-weight: 700;
         text-decoration: none;
       }
-      .marca small {
-        color: #bdd3c3;
-        font-size: 12px;
-        font-weight: 400;
+      .rol-marca {
+        padding: 5px 9px;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--color-panel-marca-texto) 10%, transparent);
+        color: var(--color-panel-marca-suave);
+        font-size: var(--texto-xs);
+        font-weight: var(--peso-semibold);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
-      nav {
+      .menu {
         display: grid;
-        gap: 4px;
+        gap: 6px;
+        margin-top: 24px;
       }
-      nav a {
+      .menu a {
+        display: flex;
+        min-height: 44px;
+        align-items: center;
         padding: 10px 12px;
-        border-radius: 7px;
-        color: #e7f0e9;
-        font-size: 14px;
+        border: 1px solid transparent;
+        border-radius: var(--radio-control);
+        color: var(--color-panel-marca-texto);
+        font-size: var(--texto-sm);
+        font-weight: var(--peso-medio);
         text-decoration: none;
+        transition:
+          background-color var(--transicion-base),
+          color var(--transicion-base);
       }
-      nav a:hover,
-      nav a.activo {
-        background: #2e6843;
-        color: #fff;
+      .menu a:hover {
+        background: color-mix(in srgb, var(--color-panel-marca-texto) 11%, transparent);
+      }
+      .menu a.activo {
+        background: var(--color-panel-marca-acento);
+        color: var(--color-panel-marca);
+        font-weight: var(--peso-bold);
       }
       .principal {
         min-width: 0;
         flex: 1;
-        background: #f5f7f5;
+        background: var(--color-fondo);
       }
       .barra {
+        position: sticky;
+        top: 0;
+        z-index: 20;
         display: flex;
-        min-height: 68px;
+        min-height: 76px;
         align-items: center;
         justify-content: space-between;
-        padding: 12px 28px;
-        border-bottom: 1px solid #e1e7e2;
-        background: #fff;
+        gap: 24px;
+        padding: 12px clamp(24px, 3vw, 48px);
+        border-bottom: 1px solid var(--color-borde);
+        background: var(--color-superficie);
       }
-      .barra div {
+      .identidad {
         display: grid;
-        gap: 3px;
+        gap: 2px;
       }
-      .barra span {
-        color: #657369;
-        font-size: 13px;
+      .identidad strong {
+        color: var(--color-texto);
+        font-family: var(--fuente-titulos);
+        font-size: var(--texto-base);
+        font-weight: var(--peso-bold);
       }
-      button {
-        padding: 9px 13px;
-        border: 1px solid #cbd6ce;
-        border-radius: 7px;
-        background: #fff;
-        color: #24352a;
+      .rol {
+        color: var(--color-texto-secundario);
+        font-size: var(--texto-sm);
+      }
+      .acciones {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .salir {
+        display: inline-flex;
+        min-height: 40px;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-control);
+        background: var(--color-superficie);
+        color: var(--color-texto);
+        font-size: var(--texto-sm);
+        font-weight: var(--peso-semibold);
         cursor: pointer;
+        transition:
+          background-color var(--transicion-base),
+          border-color var(--transicion-base);
+      }
+      .salir:hover {
+        border-color: var(--color-texto-secundario);
+        background: var(--color-superficie-hover);
+      }
+      .salir svg {
+        width: 17px;
+        height: 17px;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
       }
       .contenido {
-        padding: 28px;
+        max-width: 1800px;
+        margin-inline: auto;
+        padding: 32px clamp(24px, 3vw, 48px);
       }
       @media (max-width: 760px) {
         .marco {
@@ -123,10 +201,15 @@ import { EnlaceMenu } from '../../core/modelos';
         .lateral {
           padding: 12px;
         }
-        nav {
+        .menu {
           grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+          margin-top: 12px;
         }
-        .barra,
+        .barra {
+          position: static;
+          flex-wrap: wrap;
+          padding: 16px;
+        }
         .contenido {
           padding: 16px;
         }

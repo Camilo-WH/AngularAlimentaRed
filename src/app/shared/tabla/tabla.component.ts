@@ -49,28 +49,37 @@ import { ColumnaTabla } from '../../core/modelos';
     `
       .contenedor {
         overflow-x: auto;
-        border: 1px solid #e1e7e2;
-        border-radius: 8px;
-        background: #fff;
-        color: #1f2a22;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-tarjeta);
+        background: var(--color-superficie);
+        color: var(--color-texto);
+        box-shadow: var(--sombra-tarjeta);
       }
       table {
         width: 100%;
         border-collapse: collapse;
         text-align: left;
+        font-family: var(--fuente-texto);
       }
       th,
       td {
         padding: 12px 14px;
-        border-bottom: 1px solid #e8ece9;
+        border-bottom: 1px solid var(--color-borde);
       }
       th {
-        background: #f3f7f4;
-        font-weight: 600;
+        background: var(--color-superficie-secundaria);
+        color: var(--color-texto);
+        font-weight: var(--peso-semibold);
+      }
+      tbody tr:hover {
+        background: var(--color-superficie-hover);
+      }
+      tbody tr:last-child td {
+        border-bottom: 0;
       }
       .vacio {
         padding: 28px;
-        color: #647168;
+        color: var(--color-texto-secundario);
         text-align: center;
       }
       .paginacion {
@@ -79,13 +88,18 @@ import { ColumnaTabla } from '../../core/modelos';
         justify-content: flex-end;
         gap: 14px;
         padding: 10px 12px;
+        color: var(--color-texto-secundario);
       }
       button {
         padding: 7px 10px;
-        border: 1px solid #cbd5ce;
-        border-radius: 6px;
-        background: #fff;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-control);
+        background: var(--color-superficie);
+        color: var(--color-texto);
         cursor: pointer;
+      }
+      button:hover:not(:disabled) {
+        background: var(--color-superficie-hover);
       }
       button:disabled {
         opacity: 0.5;

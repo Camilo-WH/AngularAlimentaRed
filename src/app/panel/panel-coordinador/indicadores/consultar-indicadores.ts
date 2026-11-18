@@ -231,6 +231,8 @@ const VALIDAR_RANGO_FECHAS: ValidatorFn = (control): ValidationErrors | null => 
       h2,
       h3 {
         margin: 0;
+        color: var(--color-texto);
+        font-family: var(--fuente-titulos);
       }
       .cabecera {
         display: flex;
@@ -242,7 +244,7 @@ const VALIDAR_RANGO_FECHAS: ValidatorFn = (control): ValidationErrors | null => 
       .resumen,
       .estado,
       .periodo {
-        color: #647168;
+        color: var(--color-texto-secundario);
       }
       .resumen {
         margin: 5px 0 0;
@@ -251,27 +253,30 @@ const VALIDAR_RANGO_FECHAS: ValidatorFn = (control): ValidationErrors | null => 
         display: flex;
         flex-wrap: wrap;
         align-items: flex-end;
-        gap: 12px;
+        gap: 14px;
         margin-bottom: 20px;
-        padding: 16px;
-        border: 1px solid #e1e7e2;
-        border-radius: 8px;
-        background: #fff;
+        padding: 18px;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-tarjeta);
+        background: var(--color-superficie);
+        box-shadow: var(--sombra-tarjeta);
       }
       .filtros label {
         display: grid;
         min-width: 180px;
-        gap: 5px;
-        color: #34443a;
-        font-size: 14px;
+        gap: 6px;
+        color: var(--color-texto);
+        font-size: var(--texto-sm);
+        font-weight: var(--peso-semibold);
       }
       input,
       select {
-        padding: 9px 10px;
-        border: 1px solid #cbd5ce;
-        border-radius: 6px;
-        background: #fff;
-        color: #1f2a22;
+        min-height: 42px;
+        padding: 9px 12px;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-control);
+        background: var(--color-fondo);
+        color: var(--color-texto);
         font: inherit;
       }
       .acciones-filtro {
@@ -279,31 +284,36 @@ const VALIDAR_RANGO_FECHAS: ValidatorFn = (control): ValidationErrors | null => 
         gap: 8px;
       }
       button {
+        min-height: 40px;
         padding: 8px 14px;
-        border: 0;
-        border-radius: 6px;
-        background: #2e7d32;
-        color: #fff;
+        border: 1px solid transparent;
+        border-radius: var(--radio-control);
+        background: var(--color-acento);
+        color: var(--color-acento-texto);
+        font-weight: var(--peso-semibold);
         cursor: pointer;
+      }
+      button:hover:not(:disabled) {
+        background: var(--color-acento-hover);
       }
       button:disabled {
         opacity: 0.6;
         cursor: default;
       }
       .secundario {
-        border: 1px solid #cbd5ce;
-        background: #fff;
-        color: #1f2a22;
+        border-color: var(--color-borde);
+        background: var(--color-superficie);
+        color: var(--color-texto);
       }
       .error-carga {
-        color: #991b1b;
+        color: var(--color-error);
       }
       .error-categorias {
         display: flex;
         flex-basis: 100%;
         align-items: center;
         gap: 12px;
-        color: #991b1b;
+        color: var(--color-error);
       }
       .estado {
         padding: 14px 0;
@@ -322,18 +332,21 @@ const VALIDAR_RANGO_FECHAS: ValidatorFn = (control): ValidationErrors | null => 
         min-height: 90px;
         align-content: space-between;
         gap: 12px;
-        padding: 16px;
-        border: 1px solid #e1e7e2;
-        border-radius: 8px;
-        background: #fff;
+        padding: 18px;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-tarjeta);
+        background: var(--color-superficie);
+        box-shadow: var(--sombra-tarjeta);
       }
       .tarjeta span {
-        color: #647168;
-        font-size: 14px;
+        color: var(--color-texto-secundario);
+        font-size: var(--texto-sm);
       }
       .tarjeta strong {
-        color: #193d29;
-        font-size: 22px;
+        color: var(--color-texto);
+        font-family: var(--fuente-titulos);
+        font-size: var(--texto-2xl);
+        font-weight: var(--peso-bold);
       }
       .tabla-seccion {
         margin-top: 24px;

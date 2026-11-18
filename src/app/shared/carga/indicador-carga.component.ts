@@ -21,15 +21,18 @@ import { Component, input } from '@angular/core';
         align-items: center;
         justify-content: center;
         gap: 12px;
-        background: #ffffffb8;
-        color: #24352a;
-        font: 500 15px system-ui, sans-serif;
+        background: color-mix(in srgb, var(--color-fondo) 82%, transparent);
+        color: var(--color-texto);
+        font-family: var(--fuente-texto);
+        font-size: var(--texto-base);
+        font-weight: var(--peso-medio);
+        backdrop-filter: blur(4px);
       }
       .rueda {
         width: 24px;
         height: 24px;
-        border: 3px solid #cfe0d2;
-        border-top-color: #287a3d;
+        border: 3px solid var(--color-borde);
+        border-top-color: var(--color-acento);
         border-radius: 50%;
         animation: girar 0.8s linear infinite;
       }
