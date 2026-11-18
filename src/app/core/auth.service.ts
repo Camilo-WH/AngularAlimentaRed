@@ -2,8 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
+<<<<<<< HEAD
 import { environment } from '../../environments/environment';
 import { LoginRequest, LoginResponse, Rol, Usuario } from './modelos';
+=======
+import { ApiService } from './api.service';
+import { GoogleLoginRequest, LoginRequest, LoginResponse, Rol, Usuario } from './modelos';
+>>>>>>> e03040e (Pantallas funcionales en su totalidad de ADMINISTRADOR)
 
 interface Sesion {
   token: string;
@@ -38,6 +43,7 @@ export class AuthService {
   }
 
   login(datos: LoginRequest): Observable<LoginResponse> {
+<<<<<<< HEAD
     return this.http.post<LoginResponse>(`${environment.apiUrl}/auth/login`, datos).pipe(
       tap((respuesta) => {
         const sesion: Sesion = {
@@ -49,6 +55,29 @@ export class AuthService {
         this.sesion.set(sesion);
       }),
     );
+=======
+    return this.api
+      .post<LoginRequest, LoginResponse>('auth/login', datos)
+      .pipe(tap((respuesta) => this.guardarSesion(respuesta)));
+  }
+
+  loginConGoogle(idToken: string): Observable<LoginResponse> {
+    const datos: GoogleLoginRequest = { idToken };
+    return this.api
+      .post<GoogleLoginRequest, LoginResponse>('auth/google', datos)
+      .pipe(tap((respuesta) => this.guardarSesion(respuesta)));
+  }
+
+  private guardarSesion(respuesta: LoginResponse): void {
+    const sesion: Sesion = {
+      token: respuesta.token,
+      expiraEn: Date.now() + respuesta.expiraEnSegundos * 1000,
+      usuario: respuesta.usuario,
+    };
+    sessionStorage.setItem(CLAVE_SESION, JSON.stringify(sesion));
+    this.sesion.set(sesion);
+    this.programarExpiracion();
+>>>>>>> e03040e (Pantallas funcionales en su totalidad de ADMINISTRADOR)
   }
 
   /** Borra la sesión sin cambiar de pantalla. */

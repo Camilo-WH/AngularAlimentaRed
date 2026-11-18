@@ -32,6 +32,12 @@ export interface LoginRequest {
   contrasena: string;
 }
 
+export interface GoogleLoginRequest {
+  idToken: string;
+  correo?: string;
+  nombre?: string;
+}
+
 export interface LoginResponse {
   token: string;
   tipo: string;

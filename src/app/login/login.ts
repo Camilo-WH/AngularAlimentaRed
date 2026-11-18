@@ -1,9 +1,32 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+<<<<<<< HEAD
 import { AuthService } from '../core/auth.service';
 import { ROLES_PANEL } from '../core/modelos';
+=======
+import { environment } from '../../environments/environment';
+import { AuthService, rutaPanelPorRol } from '../core/auth.service';
+>>>>>>> e03040e (Pantallas funcionales en su totalidad de ADMINISTRADOR)
+
+interface CredencialGoogle {
+  credential: string;
+}
+
+interface ConfiguracionGoogle {
+  client_id: string;
+  callback: (respuesta: CredencialGoogle) => void;
+}
+
+interface ApiGoogle {
+  accounts: {
+    id: {
+      initialize(configuracion: ConfiguracionGoogle): void;
+      renderButton(elemento: HTMLElement, opciones: Record<string, string | number>): void;
+    };
+  };
+}
 
 @Component({
   selector: 'app-login',
@@ -38,6 +61,8 @@ import { ROLES_PANEL } from '../core/modelos';
         <button type="submit" [disabled]="cargando()">
           {{ cargando() ? 'Ingresando...' : 'Ingresar' }}
         </button>
+
+        <div #botonGoogle class="google"></div>
 
         @if (cargando()) {
           <small class="ayuda">Si el servidor estaba inactivo, puede tardar hasta un minuto.</small>
@@ -113,10 +138,16 @@ import { ROLES_PANEL } from '../core/modelos';
         color: #6b7280;
         text-align: center;
       }
+      .google {
+        display: flex;
+        justify-content: center;
+        margin-top: 4px;
+      }
     `,
   ],
 })
-export class Login {
+export class Login implements AfterViewInit {
+  private readonly botonGoogle = viewChild<ElementRef<HTMLDivElement>>('botonGoogle');
   private readonly fb = inject(FormBuilder);
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
@@ -139,6 +170,7 @@ export class Login {
     this.error.set(null);
 
     this.auth.login(this.form.getRawValue()).subscribe({
+<<<<<<< HEAD
       next: () => {
         // Solo los roles permitidos pueden usar el panel
         if (!this.auth.tieneRol(ROLES_PANEL)) {
@@ -149,11 +181,101 @@ export class Login {
         }
         this.router.navigate(['/panel']);
       },
+=======
+      next: () => this.finalizarIngreso(),
+>>>>>>> e03040e (Pantallas funcionales en su totalidad de ADMINISTRADOR)
       error: (e: HttpErrorResponse) => {
         this.cargando.set(false);
         this.error.set(this.mensaje(e));
       },
     });
+  }
+
+  ngAfterViewInit(): void {
+    void this.configurarBotonGoogle();
+  }
+
+  private finalizarIngreso(): void {
+    const destino = rutaPanelPorRol(this.auth.usuario()?.rol ?? null);
+    if (!destino) {
+      this.auth.limpiarSesion();
+      this.cargando.set(false);
+      this.error.set('Tu cuenta no tiene acceso a los paneles administrativos.');
+      return;
+    }
+    this.router.navigateByUrl(destino);
+  }
+
+  private async configurarBotonGoogle(): Promise<void> {
+    try {
+      const google = await this.esperarGoogle();
+      const contenedor = this.botonGoogle()?.nativeElement;
+      if (!contenedor) {
+        return;
+      }
+      google.accounts.id.initialize({
+        client_id: environment.googleClientId,
+        callback: (respuesta) => this.ingresarConGoogle(respuesta.credential),
+      });
+      google.accounts.id.renderButton(contenedor, {
+        theme: 'outline',
+        size: 'large',
+        shape: 'pill',
+        width: 100,
+        text: 'continue_with',
+        locale: 'es',
+      });
+    } catch {
+      this.error.set('No se pudo cargar el inicio de sesión con Google.');
+    }
+  }
+
+  private esperarGoogle(): Promise<ApiGoogle> {
+    return new Promise((resolve, reject) => {
+      const inicio = Date.now();
+      const verificar = () => {
+        const google = (window as Window & { google?: ApiGoogle }).google;
+        if (google?.accounts?.id) {
+          resolve(google);
+          return;
+        }
+        if (Date.now() - inicio > 10000) {
+          reject(new Error('Google no disponible'));
+          return;
+        }
+        setTimeout(verificar, 100);
+      };
+      verificar();
+    });
+  }
+
+  private ingresarConGoogle(idToken: string): void {
+    if (!idToken) {
+      this.error.set('No se pudo obtener el token de Google. Intenta de nuevo.');
+      return;
+    }
+    this.cargando.set(true);
+    this.error.set(null);
+    this.auth.loginConGoogle(idToken).subscribe({
+      next: () => this.finalizarIngreso(),
+      error: (e: HttpErrorResponse) => {
+        this.cargando.set(false);
+        this.error.set(this.mensajeGoogle(e));
+      },
+    });
+  }
+
+  private mensajeGoogle(e: HttpErrorResponse): string {
+    if (e.status === 0) {
+      return 'No se pudo conectar con el servidor. Si estaba inactivo, espera un minuto e intenta de nuevo.';
+    }
+    if (e.status === 400 || e.status === 401) {
+      return 'No hay una cuenta de AlimentaRed asociada a ese correo de Google.';
+    }
+    if (e.status === 403) {
+      return 'Tu cuenta está bloqueada o inactiva. Contacta al administrador.';
+    }
+    return 'No se pudo iniciar sesión con Google. Intenta de nuevo.';
   }
 
   private mensaje(e: HttpErrorResponse): string {
