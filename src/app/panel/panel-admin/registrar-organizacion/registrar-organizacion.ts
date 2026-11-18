@@ -168,64 +168,79 @@ const coincidenContrasenas: ValidatorFn = (grupo: AbstractControl): ValidationEr
       h2,
       h3 {
         margin: 0;
+        color: var(--color-texto);
+        font-family: var(--fuente-titulos);
       }
       .seccion {
-        margin-top: 20px;
+        margin-top: 28px;
       }
       .resumen {
-        color: #647168;
+        color: var(--color-texto-secundario);
       }
       .exito {
-        margin: 12px 0;
+        display: grid;
+        gap: 8px;
+        margin: 16px 0;
         padding: 12px 14px;
-        border-radius: 8px;
-        background: #dcfce7;
-        color: #166534;
+        border: 1px solid var(--color-exito);
+        border-radius: var(--radio-control);
+        background: var(--color-exito-fondo);
+        color: var(--color-exito);
       }
       .exito a {
-        margin-left: 8px;
-        color: #14532d;
-        font-weight: 600;
+        color: var(--color-exito);
+        font-weight: var(--peso-semibold);
       }
       .formulario {
-        margin: 16px 0 8px;
-        padding: 16px;
-        border: 1px solid #e1e7e2;
-        border-radius: 8px;
-        background: #fff;
-        color: #1f2a22;
+        margin: 20px 0 12px;
+        padding: clamp(18px, 2.5vw, 28px);
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-tarjeta);
+        background: var(--color-superficie);
+        color: var(--color-texto);
+        box-shadow: var(--sombra-tarjeta);
       }
       .campos {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        margin: 12px 0;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin: 20px 0;
       }
       label {
         display: flex;
         flex-direction: column;
-        gap: 4px;
-        font-size: 14px;
+        gap: 7px;
+        color: var(--color-texto);
+        font-size: var(--texto-sm);
+        font-weight: var(--peso-semibold);
       }
       input,
       select {
-        padding: 9px 10px;
-        border: 1px solid #cbd5ce;
-        border-radius: 6px;
+        width: 100%;
+        min-height: 44px;
+        padding: 10px 12px;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-control);
+        background: var(--color-fondo);
+        color: var(--color-texto);
         font: inherit;
-        color: #1f2a22;
-        background: #fff;
       }
       .error {
-        color: #b91c1c;
+        color: var(--color-error);
+        font-size: var(--texto-sm);
       }
       button {
-        padding: 8px 14px;
-        border: 0;
-        border-radius: 6px;
-        background: #2e7d32;
-        color: #fff;
+        min-height: 42px;
+        padding: 9px 16px;
+        border: 1px solid transparent;
+        border-radius: var(--radio-control);
+        background: var(--color-acento);
+        color: var(--color-acento-texto);
+        font-weight: var(--peso-semibold);
         cursor: pointer;
+      }
+      button:hover:not(:disabled) {
+        background: var(--color-acento-hover);
       }
       button:disabled {
         opacity: 0.6;

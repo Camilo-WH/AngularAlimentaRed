@@ -113,43 +113,55 @@ const GRUPOS: GrupoReglas[] = [
       h2,
       h3 {
         margin: 0;
+        color: var(--color-texto);
+        font-family: var(--fuente-titulos);
       }
       .resumen {
-        color: #647168;
+        color: var(--color-texto-secundario);
       }
       .aviso {
         margin: 12px 0 8px;
         padding: 12px 14px;
-        border-radius: 8px;
-        background: #fef9c3;
-        color: #854d0e;
+        border: 1px solid var(--color-advertencia);
+        border-radius: var(--radio-control);
+        background: var(--color-advertencia-fondo);
+        color: var(--color-advertencia);
       }
       .grupo {
-        margin: 24px 0 12px;
+        margin: 28px 0 12px;
       }
       .contenedor {
         overflow-x: auto;
-        border: 1px solid #e1e7e2;
-        border-radius: 8px;
-        background: #fff;
-        color: #1f2a22;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-tarjeta);
+        background: var(--color-superficie);
+        color: var(--color-texto);
+        box-shadow: var(--sombra-tarjeta);
       }
       table {
         width: 100%;
         border-collapse: collapse;
         text-align: left;
+        font-family: var(--fuente-texto);
       }
       th,
       td {
-        padding: 12px 14px;
-        border-bottom: 1px solid #e8ece9;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--color-borde);
       }
       th {
-        background: #f3f7f4;
-        font-weight: 600;
+        background: var(--color-superficie-secundaria);
+        font-weight: var(--peso-semibold);
+      }
+      tbody tr:hover {
+        background: var(--color-superficie-hover);
+      }
+      tbody tr:last-child td {
+        border-bottom: 0;
       }
       .valor {
-        font-weight: 600;
+        color: var(--color-texto);
+        font-weight: var(--peso-bold);
         white-space: nowrap;
       }
     `,

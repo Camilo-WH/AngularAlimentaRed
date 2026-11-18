@@ -60,39 +60,54 @@ import { MensajesService } from '../../../shared/mensajes/mensajes.service';
     `
       h2 {
         margin: 0;
+        color: var(--color-texto);
+        font-family: var(--fuente-titulos);
       }
       .resumen,
       .estado {
-        color: #647168;
+        color: var(--color-texto-secundario);
       }
       .contenedor {
         overflow-x: auto;
-        border: 1px solid #e1e7e2;
-        border-radius: 8px;
-        background: #fff;
-        color: #1f2a22;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-tarjeta);
+        background: var(--color-superficie);
+        color: var(--color-texto);
+        box-shadow: var(--sombra-tarjeta);
       }
       table {
         width: 100%;
         border-collapse: collapse;
         text-align: left;
+        font-family: var(--fuente-texto);
       }
       th,
       td {
         padding: 12px 14px;
-        border-bottom: 1px solid #e8ece9;
+        border-bottom: 1px solid var(--color-borde);
       }
       th {
-        background: #f3f7f4;
-        font-weight: 600;
+        background: var(--color-superficie-secundaria);
+        font-weight: var(--peso-semibold);
+      }
+      tbody tr:hover {
+        background: var(--color-superficie-hover);
+      }
+      tbody tr:last-child td {
+        border-bottom: 0;
       }
       button {
-        padding: 7px 14px;
-        border: 0;
-        border-radius: 6px;
-        background: #2e7d32;
-        color: #fff;
+        min-height: 40px;
+        padding: 8px 16px;
+        border: 1px solid transparent;
+        border-radius: var(--radio-control);
+        background: var(--color-acento);
+        color: var(--color-acento-texto);
+        font-weight: var(--peso-semibold);
         cursor: pointer;
+      }
+      button:hover:not(:disabled) {
+        background: var(--color-acento-hover);
       }
       button:disabled {
         opacity: 0.6;
@@ -100,7 +115,12 @@ import { MensajesService } from '../../../shared/mensajes/mensajes.service';
       }
       .oculto {
         position: absolute;
-        left: -9999px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        clip-path: inset(50%);
       }
     `,
   ],

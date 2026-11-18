@@ -240,6 +240,8 @@ function esFiltroEstado(valor: string): valor is FiltroEstado {
       h3,
       h4 {
         margin: 0;
+        color: var(--color-texto);
+        font-family: var(--fuente-titulos);
       }
       .cabecera {
         display: flex;
@@ -252,31 +254,33 @@ function esFiltroEstado(valor: string): valor is FiltroEstado {
       .estado,
       .total,
       .ayuda {
-        color: #647168;
+        color: var(--color-texto-secundario);
       }
       .resumen {
         margin: 5px 0 0;
       }
       .total {
         margin: 0 0 14px;
-        font-size: 14px;
+        font-size: var(--texto-sm);
       }
       .filtro,
       .selector,
       .motivo {
         display: grid;
-        gap: 5px;
-        color: #34443a;
-        font-size: 14px;
+        gap: 6px;
+        color: var(--color-texto);
+        font-size: var(--texto-sm);
+        font-weight: var(--peso-semibold);
       }
       select,
       textarea {
         width: min(100%, 560px);
-        padding: 9px 10px;
-        border: 1px solid #cbd5ce;
-        border-radius: 6px;
-        background: #fff;
-        color: #1f2a22;
+        min-height: 42px;
+        padding: 9px 12px;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-control);
+        background: var(--color-fondo);
+        color: var(--color-texto);
         font: inherit;
       }
       .selector {
@@ -286,24 +290,29 @@ function esFiltroEstado(valor: string): valor is FiltroEstado {
         padding: 14px 0;
       }
       .error-carga {
-        color: #991b1b;
+        color: var(--color-error);
       }
       button {
+        min-height: 40px;
         padding: 8px 14px;
-        border: 0;
-        border-radius: 6px;
-        background: #2e7d32;
-        color: #fff;
+        border: 1px solid transparent;
+        border-radius: var(--radio-control);
+        background: var(--color-acento);
+        color: var(--color-acento-texto);
+        font-weight: var(--peso-semibold);
         cursor: pointer;
+      }
+      button:hover:not(:disabled) {
+        background: var(--color-acento-hover);
       }
       button:disabled {
         opacity: 0.6;
         cursor: default;
       }
       .secundario {
-        border: 1px solid #cbd5ce;
-        background: #fff;
-        color: #1f2a22;
+        border-color: var(--color-borde);
+        background: var(--color-superficie);
+        color: var(--color-texto);
       }
       .paginacion {
         display: flex;
@@ -314,10 +323,11 @@ function esFiltroEstado(valor: string): valor is FiltroEstado {
       }
       .resolucion {
         margin-top: 24px;
-        padding: 18px;
-        border: 1px solid #e1e7e2;
-        border-radius: 8px;
-        background: #fff;
+        padding: clamp(18px, 2vw, 24px);
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-tarjeta);
+        background: var(--color-superficie);
+        box-shadow: var(--sombra-tarjeta);
       }
       .detalle h4 {
         margin: 18px 0 12px;
@@ -329,13 +339,14 @@ function esFiltroEstado(valor: string): valor is FiltroEstado {
         margin: 0;
       }
       dl div {
-        padding: 10px;
-        border-radius: 6px;
-        background: #f3f7f4;
+        padding: 12px;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-control);
+        background: var(--color-superficie-secundaria);
       }
       dt {
-        color: #647168;
-        font-size: 13px;
+        color: var(--color-texto-secundario);
+        font-size: var(--texto-sm);
       }
       dd {
         margin: 4px 0 0;
@@ -351,12 +362,16 @@ function esFiltroEstado(valor: string): valor is FiltroEstado {
         display: flex;
         gap: 18px;
         padding: 10px 12px;
-        border: 1px solid #d5ded7;
-        border-radius: 6px;
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-control);
+        color: var(--color-texto);
       }
       legend {
         padding: 0 5px;
-        font-size: 14px;
+        font-size: var(--texto-sm);
+      }
+      input[type='radio'] {
+        accent-color: var(--color-acento);
       }
       .opcion {
         display: flex;
