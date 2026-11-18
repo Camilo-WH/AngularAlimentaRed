@@ -2,13 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-<<<<<<< HEAD
-import { AuthService } from '../core/auth.service';
-import { ROLES_PANEL } from '../core/modelos';
-=======
 import { environment } from '../../environments/environment';
 import { AuthService, rutaPanelPorRol } from '../core/auth.service';
->>>>>>> e03040e (Pantallas funcionales en su totalidad de ADMINISTRADOR)
 
 interface CredencialGoogle {
   credential: string;
@@ -170,20 +165,7 @@ export class Login implements AfterViewInit {
     this.error.set(null);
 
     this.auth.login(this.form.getRawValue()).subscribe({
-<<<<<<< HEAD
-      next: () => {
-        // Solo los roles permitidos pueden usar el panel
-        if (!this.auth.tieneRol(ROLES_PANEL)) {
-          this.auth.limpiarSesion();
-          this.cargando.set(false);
-          this.error.set('Esta aplicación es solo para el personal administrativo.');
-          return;
-        }
-        this.router.navigate(['/panel']);
-      },
-=======
       next: () => this.finalizarIngreso(),
->>>>>>> e03040e (Pantallas funcionales en su totalidad de ADMINISTRADOR)
       error: (e: HttpErrorResponse) => {
         this.cargando.set(false);
         this.error.set(this.mensaje(e));
