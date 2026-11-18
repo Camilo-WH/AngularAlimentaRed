@@ -103,7 +103,7 @@ export const routes: Routes = [
       {
         path: 'apelaciones',
         loadComponent: () =>
-          import('./panel/panel-panel-coordinador/apelaciones/evaluar-apelacion').then(
+          import('./panel/panel-coordinador/apelaciones/evaluar-apelacion').then(
             (modulo) => modulo.EvaluarApelacion,
           ),
       },
