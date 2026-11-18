@@ -7,18 +7,19 @@ import { environment } from '../../environments/environment';
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);
   const token = auth.token;
+  const esGoogle = auth.esSesionGoogle;
   const baseApi = environment.apiUrl.replace(/\/$/, '');
   const esPeticionApi = req.url === baseApi || req.url.startsWith(`${baseApi}/`);
   const esLogin = req.url.includes('/auth/login');
 
   const peticion =
-    token && esPeticionApi && !esLogin
+    token && esPeticionApi && !esLogin && !esGoogle
       ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
       : req;
 
   return next(peticion).pipe(
     catchError((error: HttpErrorResponse) => {
-      if (error.status === 401 && esPeticionApi && !esLogin) {
+      if (error.status === 401 && esPeticionApi && !esLogin && !esGoogle) {
         auth.logout();
       }
       return throwError(() => error);

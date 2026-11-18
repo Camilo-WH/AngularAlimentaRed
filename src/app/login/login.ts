@@ -240,22 +240,16 @@ export class Login implements AfterViewInit {
     this.error.set(null);
     this.auth.loginConGoogle(idToken).subscribe({
       next: () => this.finalizarIngreso(),
-      error: (e: HttpErrorResponse) => {
+      error: (e: unknown) => {
         this.cargando.set(false);
         this.error.set(this.mensajeGoogle(e));
       },
     });
   }
 
-  private mensajeGoogle(e: HttpErrorResponse): string {
-    if (e.status === 0) {
-      return 'No se pudo conectar con el servidor. Si estaba inactivo, espera un minuto e intenta de nuevo.';
-    }
-    if (e.status === 400 || e.status === 401) {
-      return 'No hay una cuenta de AlimentaRed asociada a ese correo de Google.';
-    }
-    if (e.status === 403) {
-      return 'Tu cuenta está bloqueada o inactiva. Contacta al administrador.';
+  private mensajeGoogle(e: unknown): string {
+    if (e instanceof Error) {
+      return e.message;
     }
     return 'No se pudo iniciar sesión con Google. Intenta de nuevo.';
   }
